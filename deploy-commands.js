@@ -33,6 +33,11 @@ const commands = [
     .setName('ranking')
     .setDescription('Mostra o ranking de capturas')
 
+  new SlashCommandBuilder()
+  .setName('resetranking')
+  .setDescription('Reseta o ranking de capturas')
+  .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+
 ].map(command => command.toJSON());
 
 const rest = new REST({ version: '10' })

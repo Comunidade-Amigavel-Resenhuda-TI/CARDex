@@ -119,6 +119,10 @@ const commands = [
     .setDescription("Define cargo do painel")
     .addRoleOption(o => o.setName("cargo").setDescription("Cargo").setRequired(true)),
   new SlashCommandBuilder().setName("painel").setDescription("Painel admin")
+  new SlashCommandBuilder()
+  .setName("resetranking")
+  .setDescription("Reseta o ranking de capturas")
+  .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageGuild),
 ].map(c => c.toJSON());
 
 // ---------------- READY ----------------
@@ -231,6 +235,24 @@ client.on("interactionCreate", async interaction => {
     delete adminPanelMap[interaction.user.id];
     return interaction.editReply({ content: "✅ Ação concluída.", components: [] });
   }
+  
+  // RESETAR RANKING
+  if (interaction.commandName === "resetranking") {
+  if (!interaction.member.permissions.has(PermissionsBitField.Flags.ManageGuild)) {
+    return interaction.reply({
+      content: "❌ Você precisa da permissão **Gerenciar Servidor** para resetar o ranking.",
+      ephemeral: true
+    });
+  }
+
+  usersData = {};
+  fs.writeFileSync(USERS_FILE, JSON.stringify(usersData, null, 2));
+
+  return interaction.reply({
+    content: "✅ **Ranking resetado!** Todas as capturas foram apagadas.",
+    ephemeral: true
+  });
+}
 
   // COMANDOS
   if (!interaction.isChatInputCommand()) return;
