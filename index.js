@@ -17,6 +17,7 @@ const { clientId } = require("./config.json");
 const countries = require("./countries.json");
 const fs = require("fs");
 const { REST } = require("@discordjs/rest");
+const crypto = require("crypto");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -87,7 +88,7 @@ async function spawnCountry(channel, country = null, giveUser = null) {
     return giveUser.send({ embeds: [embed] }).catch(() => {});
   }
 
-  const id = "pegar_" + Date.now();
+  const id = "pegar_" + crypto.randomUUID();
   const row = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId(id)
