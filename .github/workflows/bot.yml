@@ -22,11 +22,11 @@ jobs:
       - name: Instalar dependências
         run: npm install
 
-      - name: Configurar comandos
+      - name: Registrar comandos
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: node deploy-commands.js
-        
+
       - name: Iniciar bot
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
