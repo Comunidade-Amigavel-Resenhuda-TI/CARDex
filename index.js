@@ -13,7 +13,7 @@ const {
   Routes
 } = require("discord.js");
 
-const { token, clientId } = require("./config.json");
+const { clientId } = require("./config.json");
 const countries = require("./countries.json");
 const fs = require("fs");
 const { REST } = require("@discordjs/rest");
@@ -101,7 +101,8 @@ async function spawnCountry(channel, country = null, giveUser = null) {
 
 // ---------------- COMANDOS ----------------
 
-const rest = new REST({ version: "10" }).setToken(token);
+const rest = new REST({ version: '10' })
+  .setToken(process.env.DISCORD_TOKEN);
 
 const commands = [
   new SlashCommandBuilder().setName("spawnar").setDescription("Força um spawn"),
