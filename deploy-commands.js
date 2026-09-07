@@ -1,5 +1,13 @@
-const { REST, Routes, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
-const { clientId, guildId, token } = require('./config.json');
+require('dotenv').config();
+
+const {
+  REST,
+  Routes,
+  SlashCommandBuilder,
+  PermissionFlagsBits
+} = require('discord.js');
+
+const { clientId, guildId } = require('./config.json');
 
 const commands = [
 
@@ -27,17 +35,21 @@ const commands = [
 
 ].map(command => command.toJSON());
 
-const rest = new REST({ version: '10' }).setToken(token);
+const rest = new REST({ version: '10' })
+  .setToken(process.env.DISCORD_TOKEN);
 
 (async () => {
   try {
     console.log('🔄 Registrando Slash Commands da guild...');
+
     await rest.put(
       Routes.applicationGuildCommands(clientId, guildId),
       { body: commands }
     );
+
     console.log('✅ Slash Commands da guild registrados com sucesso!');
   } catch (error) {
     console.error('❌ Erro ao registrar comandos:', error);
+    process.exit(1);
   }
 })();
