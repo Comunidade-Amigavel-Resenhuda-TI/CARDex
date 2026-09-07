@@ -23,5 +23,6 @@ jobs:
         run: npm install
 
       - name: Iniciar bot
-        env: DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: node index.js
